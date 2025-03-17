@@ -1,4 +1,6 @@
-package ToolShopUI;
+package ToolShopUI.component;
+import ToolShopUI.testCases.UserInformation;
+
 import java.io.IOException;
 import java.util.List;
 

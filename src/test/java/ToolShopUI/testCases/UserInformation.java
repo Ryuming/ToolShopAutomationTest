@@ -1,4 +1,4 @@
-package ToolShopUI;
+package ToolShopUI.testCases;
 
 
 import java.io.*;
