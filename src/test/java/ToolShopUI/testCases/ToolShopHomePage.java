@@ -23,7 +23,7 @@ public class ToolShopHomePage {
     @BeforeTest
     public void SetUp()
     {
-        System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+ "src/main/resources/chromedriver-win64/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+ "src/test/resources/chromedriver-win64/chromedriver.exe");
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5000));
         driver.manage().deleteAllCookies();
@@ -149,11 +149,11 @@ public class ToolShopHomePage {
     @Test
     public void verifySortBoxSelectable() throws InterruptedException
     {
-        Select selectBox = new Select(driver.findElement(By.xpath("//*[@id=\"filters\"]/form[1]/div/select")));
-        List<WebElement> options = selectBox.getOptions();
+        Select sortBox = new Select(driver.findElement(By.xpath("//*[@id=\"filters\"]/form[1]/div/select")));
+        List<WebElement> options = sortBox.getOptions();
         for (int i = 0; i < options.size(); i++)
         {
-            selectBox.selectByIndex(i);
+            sortBox.selectByIndex(i);
             Thread.sleep(800);
             System.out.println("selected Option: " + options.get(i).getText());
         }
