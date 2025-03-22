@@ -17,7 +17,7 @@ public class ToolShopLogin {
     @BeforeTest
     public void SetUp()
     {
-        System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+ "src/main/resources/chromedriver-win64/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+ "src/test/resources/chromedriver-win64/chromedriver.exe");
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5000));
         driver.manage().deleteAllCookies();

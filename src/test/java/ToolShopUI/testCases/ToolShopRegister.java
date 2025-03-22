@@ -48,6 +48,7 @@ public class ToolShopRegister {
         Random randomNum = new Random();
         return (char)(randomNum.nextInt(26) + 'a');
     }
+
     private static char randomCharacters()
     {
         Random randomNum = new Random();
@@ -88,11 +89,15 @@ public class ToolShopRegister {
         return myString.toString();
     }
 
-    private static char randomNumber(int numOfCharacter)
+    private static String randomNumber(int numOfCharacter)
     {
         Random randomNum = new Random();
-
-        return (char)(randomNum.nextInt(100));
+        int myInteger = 0;
+        for (int i = 0; i < numOfCharacter; i++)
+        {
+            myInteger = myInteger*10 + randomNum.nextInt(10);
+        }
+        return String.valueOf(myInteger);
     }
 
 
