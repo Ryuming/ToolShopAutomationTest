@@ -1,20 +1,26 @@
 package ToolShopUI.pages;
 
+import ToolShopUI.base.BaseSetUp;
+import ToolShopUI.component.PageNavigator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
+import org.testng.annotations.Parameters;
 
+import java.time.Duration;
 import java.util.List;
 
-public class ToolShopHomePage {
+public class ToolShopHomePage implements PageNavigator {
     private WebDriver driver;
 
+    private static final String homePageUrl = "http://practicesoftwaretesting.com/";
     private By toolShopLogo = By.cssSelector("#Layer_1");
     private By homeButton = By.xpath("//*[@id=\"navbarSupportedContent\"]/ul/li[1]/a");
     private By contactButton = By.xpath("//*[@id=\"navbarSupportedContent\"]/ul/li[3]/a");
     private By signInButton = By.xpath("//*[@id=\"navbarSupportedContent\"]/ul/li[4]/a");
     private By categoryButton = By.xpath("//*[@id=\"navbarSupportedContent\\\"]/ul/li[2]/a");
-    private By categorySelected = By.cssSelector("#navbarSupportedContent > ul > li.nav-item.dropdown > ul > li:nth-child(\" + (i + 1) + \")");
+    private String categorySelected = "#navbarSupportedContent > ul > li.nav-item.dropdown > ul > li:nth-child";
     private By categoryDropdownList = By.cssSelector("#navbarSupportedContent > ul > li.nav-item.dropdown > ul > li");
     private By normalCategory = By.cssSelector("body > app-root > div > app-category > div:nth-child(1) > h2");
     private By rentalCategory = By.cssSelector("body > app-root > div > app-overview > div > h1");
@@ -71,9 +77,9 @@ public class ToolShopHomePage {
         return driver.findElement(categoryButton);
     }
 
-    public WebElement getCategorySelected()
+    public WebElement getCategorySelected(int initialPosition)
     {
-        return driver.findElement(categorySelected);
+        return driver.findElement(By.cssSelector(categorySelected + "(" + (initialPosition+1) + ")"));
     }
 
     public List<WebElement> getCategoryDropdownList()
@@ -172,6 +178,76 @@ public class ToolShopHomePage {
     {
         return driver.findElement(currentPage);
     }
+
+    public void goToPage(String siteUrl)
+    {
+        driver.navigate().to(siteUrl);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+    }
+
+    public String handleCategoryList(int initPivot) throws InterruptedException
+    {
+        goToPage(homePageUrl);
+        getCategoryButton().click();
+        Thread.sleep(1000);
+        String categorySelected = getCategorySelected(initPivot).getText();
+        getCategorySelected(initPivot).click();
+        return categorySelected;
+    }
+
+    public void clickCategoryButton() throws InterruptedException
+    {
+        getCategoryButton().click();
+        Thread.sleep(1000);
+    }
+
+    public void verifyToolShopTitle()
+    {
+        Assert.assertEquals(getHomePageTitle(), "Practice Software Testing - Toolshop - v5.0");
+    }
+
+    public void verifyToolShopLogo()
+    {
+        Assert.assertTrue(getToolShopLogo().isDisplayed());
+    }
+
+    public void verifyHomeButtonClickable()
+    {
+        getHomeButton().click();
+        Assert.assertEquals(getHomePageTitle(), "Practice Software Testing - Toolshop - v5.0");
+    }
+
+    public void verifyContactButtonClickable()
+    {
+        getContactButton().click();
+        Assert.assertEquals(getHomePageTitle(), "Contact Us - Practice Software Testing - Toolshop - v5.0");
+    }
+
+    public void verifySignInButtonClickable() throws InterruptedException
+    {
+        getSignInButton().click();
+        Thread.sleep(3000);
+        Assert.assertEquals(getHomePageTitle(), "Login - Practice Software Testing - Toolshop - v5.0");
+    }
+
+    public void verifyCategoryButtonSelectable() throws InterruptedException
+    {
+        clickCategoryButton();
+        List<WebElement> categoryList = getCategoryDropdownList();
+
+        for (int i = 0; i < categoryList.size(); i++) {
+            String pageTitle = null;
+            if (i < categoryList.size() - 2) {
+                pageTitle = handleCategoryList(i);
+                Assert.assertEquals(getNormalCategory().getText(), "Category: " + pageTitle);
+            } else if (i == categoryList.size() - 1) {
+                pageTitle = handleCategoryList(i);
+                Assert.assertEquals(getRentalCategory().getText(), pageTitle);
+            }
+        }
+
+    }
+
 
 
 }

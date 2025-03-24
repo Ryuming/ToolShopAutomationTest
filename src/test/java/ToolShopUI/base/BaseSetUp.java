@@ -5,6 +5,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 
 import java.time.Duration;
@@ -14,7 +15,7 @@ public class BaseSetUp
 {
     private WebDriver driver;
 
-    private static final String driverPath = System.getProperty("user.dir") + "src/test/resources";
+    private static String driverPath = "/src/test/resources";
 
     public WebDriver getDriver() {
         return driver;
@@ -37,9 +38,13 @@ public class BaseSetUp
     private static WebDriver initChromeDriver(String siteUrl) {
         System.out.println("Launching Chrome Browser");
 
-        System.setProperty("webdriver.chrome.driver", driverPath + "/chromedriver-win64/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + driverPath + "/chromedriver-win64/chromedriver.exe");
         WebDriver driver = new ChromeDriver();
-        generalSetUp(siteUrl, driver);
+        driver.manage().window().maximize();
+        driver.navigate().to(siteUrl);
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(3));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+        System.out.println("Launched Chrome Browser");
         return driver;
     }
 

@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.1.dtd">
+<suite name="Page Object test example">
+    <parameter name="browserType" value="chrome" />
+    <parameter name="siteUrl"
+               value="https://practicesoftwaretesting.com/" />
+
+    <test name="sample test">
+        <classes>
+            <class name="ToolShopUI.testCases.ToolShopHomePageTest">
+                <methods>
+                    <include name="verifyToolShopTitle" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
