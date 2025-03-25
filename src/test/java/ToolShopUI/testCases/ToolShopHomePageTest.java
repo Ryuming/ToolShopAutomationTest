@@ -4,11 +4,16 @@ import ToolShopUI.base.BaseSetUp;
 import ToolShopUI.pages.ToolShopHomePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+
+import java.time.Duration;
 import java.util.List;
 
 public class ToolShopHomePageTest extends BaseSetUp {
@@ -94,5 +99,39 @@ public class ToolShopHomePageTest extends BaseSetUp {
     }
 
 
+    @Test(priority = 8)
+    public void verifySortBoxSelectable() throws InterruptedException {
+        toolShopHomePage = new ToolShopHomePage(driver);
+        Select sortBox = new Select(toolShopHomePage.getSortBox());
+        List<WebElement> sortBoxOptions = sortBox.getOptions();
+        for (int i = 0; i < sortBoxOptions.size(); i++)
+        {
+            sortBox.selectByIndex(i);
+            Thread.sleep(800);
+            System.out.println("Selected Option: " + sortBoxOptions.get(i).getText());
+        }
+    }
 
+    @Test(priority = 9)
+    public void verifyPriceRangeSlider() throws InterruptedException {
+        toolShopHomePage = new ToolShopHomePage(driver);
+        Actions actions = new Actions(driver);
+        actions.dragAndDropBy(toolShopHomePage.getMinSlider(), 195, 0).build().perform();
+        Thread.sleep(3000);
+        actions.dragAndDropBy(toolShopHomePage.getMaxSlider(), -80, 0).build().perform();
+    }
+
+    @Test(priority = 10)
+    public void verifySearchBar() throws InterruptedException {
+        toolShopHomePage = new ToolShopHomePage(driver);
+        String searchString = "Hammer";
+        toolShopHomePage.getSearchBox().sendKeys(searchString);
+        Thread.sleep(2000);
+        toolShopHomePage.getSearchButton().click();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+        String searchResult = toolShopHomePage.getSearchResult().getText();
+        System.out.println("Search result: " + searchResult);
+        Assert.assertEquals(searchResult.toLowerCase(), searchString.toLowerCase());
+
+    }
 }
