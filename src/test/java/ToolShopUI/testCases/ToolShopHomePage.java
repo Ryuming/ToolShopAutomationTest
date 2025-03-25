@@ -31,9 +31,9 @@ public class ToolShopHomePage {
     }
 
     @BeforeMethod
-    public void navigateToHomePage()
-    {
+    public void navigateToHomePage() throws InterruptedException {
         driver.navigate().to("https://practicesoftwaretesting.com/");
+        Thread.sleep(2000);
     }
 
     @Test

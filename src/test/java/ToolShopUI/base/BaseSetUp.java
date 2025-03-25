@@ -1,12 +1,11 @@
 package ToolShopUI.base;
 
+import ToolShopUI.component.ConfigTextFile;
+import ToolShopUI.component.ConfigTextFileHandler;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Parameters;
+import org.testng.annotations.*;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -17,6 +16,7 @@ public class BaseSetUp
 
     private static String driverPath = "/src/test/resources";
 
+    private static final String configBrowserFilePath = System.getProperty("user.dir") + "/configBrowser.config";
     public WebDriver getDriver() {
         return driver;
     }
@@ -62,11 +62,17 @@ public class BaseSetUp
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
     }
 
-    @Parameters({"browserType", "siteUrl"})
+    private void readInitData(String configFilePath)
+    {
+
+    }
+
     @BeforeClass
-    public void initializeTestBaseSetUp(String browserType, String siteUrl) {
+    public void initializeTestBaseSetUp() {
         try {
-            setDriver(browserType, siteUrl);
+            ConfigTextFileHandler configFile = new ConfigTextFileHandler();
+            ConfigTextFile configData = new ConfigTextFile(configFile.openConfigFile(configBrowserFilePath));
+            setDriver(configData.getBrowserType(), configData.getSiteUrl());
             System.out.println("Test Base Setup completed successfully");
         }
         catch (Exception e) {
@@ -78,6 +84,16 @@ public class BaseSetUp
     public void tearDown() {
         System.out.println("Test Base Teardown completed successfully");
         driver.quit();
+    }
+
+    @BeforeMethod
+    public void warmUpBeforeTest() throws Exception {
+        Thread.sleep(2000);
+    }
+
+    @AfterMethod
+    public void cooldownAfterTest() throws Exception {
+        Thread.sleep(2000);
     }
 
 }

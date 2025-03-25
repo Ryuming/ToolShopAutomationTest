@@ -19,13 +19,13 @@ public class ToolShopHomePage implements PageNavigator {
     private By homeButton = By.xpath("//*[@id=\"navbarSupportedContent\"]/ul/li[1]/a");
     private By contactButton = By.xpath("//*[@id=\"navbarSupportedContent\"]/ul/li[3]/a");
     private By signInButton = By.xpath("//*[@id=\"navbarSupportedContent\"]/ul/li[4]/a");
-    private By categoryButton = By.xpath("//*[@id=\"navbarSupportedContent\\\"]/ul/li[2]/a");
+    private By categoryButton = By.xpath("//*[@id=\"navbarSupportedContent\"]/ul/li[2]/a");
     private String categorySelected = "#navbarSupportedContent > ul > li.nav-item.dropdown > ul > li:nth-child";
     private By categoryDropdownList = By.cssSelector("#navbarSupportedContent > ul > li.nav-item.dropdown > ul > li");
     private By normalCategory = By.cssSelector("body > app-root > div > app-category > div:nth-child(1) > h2");
     private By rentalCategory = By.cssSelector("body > app-root > div > app-overview > div > h1");
     private By languageSelectButton = By.xpath("//*[@id=\"language\"]");
-
+    private String languageSelected = "//*[@id=\"dropdown-animated\"]/li[";
     private By listLanguage =  By.xpath("//*[@id=\"dropdown-animated\"]/li/a");
     private By sortBox = By.xpath("//*[@id=\"filters\"]/form[1]/div/select");
     private By minSlider = By.xpath("//*[@id=\"filters\"]/div[1]/ngx-slider/span[5]");
@@ -47,8 +47,7 @@ public class ToolShopHomePage implements PageNavigator {
         this.driver = driver;
     }
 
-    public String getHomePageTitle()
-    {
+    public String getHomePageTitle()  {
         return driver.getTitle();
     }
 
@@ -102,6 +101,10 @@ public class ToolShopHomePage implements PageNavigator {
         return driver.findElement(languageSelectButton);
     }
 
+    public WebElement getLanguageSelected(int initialPosition)
+    {
+        return driver.findElement(By.xpath(languageSelected + (initialPosition+1) + "]/a"));
+    }
     public List<WebElement> getListLanguage()
     {
         return driver.findElements(listLanguage);
@@ -192,7 +195,19 @@ public class ToolShopHomePage implements PageNavigator {
         Thread.sleep(1000);
         String categorySelected = getCategorySelected(initPivot).getText();
         getCategorySelected(initPivot).click();
+        Thread.sleep(2000);
         return categorySelected;
+    }
+
+    public String handleLanguageDropdown(int initPivot) throws InterruptedException {
+        goToPage(homePageUrl);
+        getLanguageSelectButton().click();
+        Thread.sleep(1000);
+
+        String selectedLanguage = getLanguageSelected(initPivot).getText();
+        getLanguageSelected(initPivot).click();
+        Thread.sleep(2000);
+        return selectedLanguage;
     }
 
     public void clickCategoryButton() throws InterruptedException
@@ -201,6 +216,11 @@ public class ToolShopHomePage implements PageNavigator {
         Thread.sleep(1000);
     }
 
+    public void clickLanguageButton() throws InterruptedException
+    {
+        getLanguageSelectButton().click();
+        Thread.sleep(1000);
+    }
     public void verifyToolShopTitle()
     {
         Assert.assertEquals(getHomePageTitle(), "Practice Software Testing - Toolshop - v5.0");
