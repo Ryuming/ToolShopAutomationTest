@@ -50,8 +50,14 @@ public class BaseSetUp
 
     private static WebDriver initFirefoxDriver(String siteUrl) {
         System.out.println("Launching Firefox Browser");
-        System.setProperty("webdriver.gecko.driver", driverPath + "/geckodriver-v0.36.0-win-aarch64/geckodriver.exe");
-        return new FirefoxDriver();
+        System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + driverPath + "/geckodriver-v0.36.0-win64/geckodriver.exe");
+        WebDriver driver = new FirefoxDriver();
+        driver.manage().window().maximize();
+        driver.navigate().to(siteUrl);
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(3));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+        System.out.println("Launched Firefox Browser");
+        return driver;
     }
 
     private static void generalSetUp(String siteUrl, WebDriver driver)
@@ -62,10 +68,6 @@ public class BaseSetUp
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
     }
 
-    private void readInitData(String configFilePath)
-    {
-
-    }
 
     @BeforeClass
     public void initializeTestBaseSetUp() {
