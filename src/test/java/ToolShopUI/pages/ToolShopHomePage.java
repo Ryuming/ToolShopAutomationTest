@@ -6,6 +6,7 @@ import ToolShopUI.component.DataFormatHandler;
 import ToolShopUI.component.PageNavigator;
 import ToolShopUI.component.WebDriverHandler;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -271,9 +272,8 @@ public class ToolShopHomePage implements PageNavigator {
 
     public void scrollToFooter() throws InterruptedException{
         WebElement footer = getFooter();
-        Actions scrollToFooter = new Actions(driver);
-        scrollToFooter.scrollToElement(footer).build().perform();
-        Thread.sleep(1000);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
     }
 
     public String getCurrentPageText() {
