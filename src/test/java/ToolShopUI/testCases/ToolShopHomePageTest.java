@@ -75,7 +75,7 @@ public class ToolShopHomePageTest extends BaseSetUp {
             String pageTitle = null;
             if (i < categoryList.size() - 2) {
                 pageTitle = toolShopHomePage.handleCategoryList(i);
-                Assert.assertEquals(toolShopHomePage.getNormalCategory().getText(), "Category: " + pageTitle);
+                Assert.assertEquals(toolShopHomePage.getNormalCategoryText(), "Category: " + pageTitle);
             } else if (i == categoryList.size() - 1) {
                 pageTitle = toolShopHomePage.handleCategoryList(i);
                 Assert.assertEquals(toolShopHomePage.getRentalCategory().getText(), pageTitle);
@@ -134,4 +134,6 @@ public class ToolShopHomePageTest extends BaseSetUp {
         Assert.assertEquals(searchResult.toLowerCase(), searchString.toLowerCase());
 
     }
+
+
 }

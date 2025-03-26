@@ -221,53 +221,16 @@ public class ToolShopHomePage implements PageNavigator {
         getLanguageSelectButton().click();
         Thread.sleep(1000);
     }
-    public void verifyToolShopTitle()
+
+    public String getNormalCategoryText()
     {
-        Assert.assertEquals(getHomePageTitle(), "Practice Software Testing - Toolshop - v5.0");
+        return getNormalCategory().getText();
     }
 
-    public void verifyToolShopLogo()
+    public String getRentalCategoryText()
     {
-        Assert.assertTrue(getToolShopLogo().isDisplayed());
+        return getRentalCategory().getText();
     }
-
-    public void verifyHomeButtonClickable()
-    {
-        getHomeButton().click();
-        Assert.assertEquals(getHomePageTitle(), "Practice Software Testing - Toolshop - v5.0");
-    }
-
-    public void verifyContactButtonClickable()
-    {
-        getContactButton().click();
-        Assert.assertEquals(getHomePageTitle(), "Contact Us - Practice Software Testing - Toolshop - v5.0");
-    }
-
-    public void verifySignInButtonClickable() throws InterruptedException
-    {
-        getSignInButton().click();
-        Thread.sleep(3000);
-        Assert.assertEquals(getHomePageTitle(), "Login - Practice Software Testing - Toolshop - v5.0");
-    }
-
-    public void verifyCategoryButtonSelectable() throws InterruptedException
-    {
-        clickCategoryButton();
-        List<WebElement> categoryList = getCategoryDropdownList();
-
-        for (int i = 0; i < categoryList.size(); i++) {
-            String pageTitle = null;
-            if (i < categoryList.size() - 2) {
-                pageTitle = handleCategoryList(i);
-                Assert.assertEquals(getNormalCategory().getText(), "Category: " + pageTitle);
-            } else if (i == categoryList.size() - 1) {
-                pageTitle = handleCategoryList(i);
-                Assert.assertEquals(getRentalCategory().getText(), pageTitle);
-            }
-        }
-
-    }
-
 
 
 }
