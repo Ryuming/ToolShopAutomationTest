@@ -78,7 +78,7 @@ public class ToolShopHomePageTest extends BaseSetUp {
                 Assert.assertEquals(toolShopHomePage.getNormalCategoryText(), "Category: " + pageTitle);
             } else if (i == categoryList.size() - 1) {
                 pageTitle = toolShopHomePage.handleCategoryList(i);
-                Assert.assertEquals(toolShopHomePage.getRentalCategory().getText(), pageTitle);
+                Assert.assertEquals(toolShopHomePage.getRentalCategoryText(), pageTitle);
             }
         }
 
@@ -93,7 +93,7 @@ public class ToolShopHomePageTest extends BaseSetUp {
         for (int i = 0; i < languageList.size(); i++) {
             String selectedLanguage = toolShopHomePage.handleLanguageDropdown(i);
             System.out.println("selectedLanguage: " + selectedLanguage);
-            Assert.assertEquals(selectedLanguage, toolShopHomePage.getLanguageSelectButton().getText());
+            Assert.assertEquals(selectedLanguage, toolShopHomePage.getSelectedLanguageText());
         }
 
     }
@@ -108,32 +108,71 @@ public class ToolShopHomePageTest extends BaseSetUp {
         {
             sortBox.selectByIndex(i);
             Thread.sleep(800);
-            System.out.println("Selected Option: " + sortBoxOptions.get(i).getText());
+            System.out.println("Selected Option: " + toolShopHomePage.getSortBoxOption(i, sortBoxOptions));
         }
     }
 
     @Test(priority = 9)
     public void verifyPriceRangeSlider() throws InterruptedException {
         toolShopHomePage = new ToolShopHomePage(driver);
-        Actions actions = new Actions(driver);
-        actions.dragAndDropBy(toolShopHomePage.getMinSlider(), 195, 0).build().perform();
-        Thread.sleep(3000);
-        actions.dragAndDropBy(toolShopHomePage.getMaxSlider(), -80, 0).build().perform();
+        toolShopHomePage.dragAndDropSlider(toolShopHomePage.getMinSlider(), 195, 0);
+        toolShopHomePage.dragAndDropSlider(toolShopHomePage.getMaxSlider(), -80, 0);
     }
 
     @Test(priority = 10)
     public void verifySearchBar() throws InterruptedException {
         toolShopHomePage = new ToolShopHomePage(driver);
         String searchString = "Hammer";
-        toolShopHomePage.getSearchBox().sendKeys(searchString);
-        Thread.sleep(2000);
-        toolShopHomePage.getSearchButton().click();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
-        String searchResult = toolShopHomePage.getSearchResult().getText();
+        toolShopHomePage.enterTextInSearchBox(searchString);
+        toolShopHomePage.clickSearchButton();
+        String searchResult = toolShopHomePage.getSearchResultText();
+
         System.out.println("Search result: " + searchResult);
         Assert.assertEquals(searchResult.toLowerCase(), searchString.toLowerCase());
 
     }
 
+    @Test(priority = 11)
+    public void verifyPageSelector() throws InterruptedException {
+        toolShopHomePage = new ToolShopHomePage(driver);
+        toolShopHomePage.scrollToFooter();
+        List<WebElement> pageButtons = toolShopHomePage.getPageButton();
+
+        for (WebElement button : pageButtons) {
+            toolShopHomePage.pageHandler(button);
+        }
+
+        System.out.println("Number of Page selected: " + pageButtons.size());
+    }
+
+    @Test(priority = 12)
+    public void verifyFilterMainCategoryCheckBox() throws InterruptedException {
+        toolShopHomePage = new ToolShopHomePage(driver);
+        toolShopHomePage.scrollToFooter();
+        List<WebElement> listMainCategory = toolShopHomePage.getListCategory();
+        for (WebElement mainCategory : listMainCategory) {
+            toolShopHomePage.handleMainCategoryCheckBox(mainCategory);
+        }
+    }
+
+    @Test(priority = 13)
+    public void verifyFilterSubCategoryCheckBox() throws InterruptedException {
+        toolShopHomePage = new ToolShopHomePage(driver);
+        toolShopHomePage.scrollToFooter();
+            List<WebElement> listSubCategory = toolShopHomePage.getSubCategoryList();
+            for (WebElement subCategory : listSubCategory) {
+                toolShopHomePage.handleSubCategoryCheckBox(subCategory);
+            }
+    }
+
+    @Test(priority = 14)
+    public void verifyFilterBrandCheckBox() throws InterruptedException {
+        toolShopHomePage = new ToolShopHomePage(driver);
+        toolShopHomePage.scrollToFooter();
+        List<WebElement> listBrand = toolShopHomePage.getBrandList();
+        for (WebElement brand : listBrand) {
+            toolShopHomePage.handleBrandCheckBox(brand);
+        }
+    }
 
 }
