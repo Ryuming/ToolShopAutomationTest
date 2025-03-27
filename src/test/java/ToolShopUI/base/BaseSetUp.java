@@ -16,7 +16,7 @@ public class BaseSetUp
 
     private static String driverPath = "/src/test/resources";
 
-    private static final String configBrowserFilePath = System.getProperty("user.dir") + "/configBrowser.config";
+    protected static final String configBrowserFilePath = System.getProperty("user.dir") + "/configBrowser.config";
     public WebDriver getDriver() {
         return driver;
     }
@@ -91,10 +91,12 @@ public class BaseSetUp
     @BeforeMethod
     public void warmUpBeforeTest() throws Exception {
         Thread.sleep(2000);
+
     }
 
     @AfterMethod
     public void cooldownAfterTest() throws Exception {
+        driver.manage().deleteAllCookies();
         Thread.sleep(2000);
     }
 
