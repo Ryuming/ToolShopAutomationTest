@@ -1,6 +1,8 @@
 package ToolShopUI.testCases;
 
 import ToolShopUI.base.BaseSetUp;
+import ToolShopUI.component.ConfigTextFile;
+import ToolShopUI.component.ConfigTextFileHandler;
 import ToolShopUI.pages.ToolShopHomePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,11 +11,13 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.List;
 
 public class ToolShopHomePageTest extends BaseSetUp {
@@ -23,6 +27,17 @@ public class ToolShopHomePageTest extends BaseSetUp {
     @BeforeClass
     public void setUp() {
         driver = getDriver();
+    }
+
+    @BeforeMethod
+    public void navigateToToolShopHomePage() {
+
+        ConfigTextFileHandler configFile = new ConfigTextFileHandler();
+        ConfigTextFile configData = new ConfigTextFile(configFile.openConfigFile(configBrowserFilePath));
+
+
+        driver.navigate().to(configData.getSiteUrl());
+
     }
 
     @Test(priority = 1)
@@ -89,13 +104,18 @@ public class ToolShopHomePageTest extends BaseSetUp {
         toolShopHomePage = new ToolShopHomePage(driver);
         toolShopHomePage.clickLanguageButton();
         List<WebElement> languageList = toolShopHomePage.getListLanguage();
+        String defaultLanguage = "EN";
+        int defaultLanguagePosition = 0;
 
         for (int i = 0; i < languageList.size(); i++) {
             String selectedLanguage = toolShopHomePage.handleLanguageDropdown(i);
             System.out.println("selectedLanguage: " + selectedLanguage);
+            if (selectedLanguage.equals("EN")) {
+                defaultLanguagePosition = i;
+            }
             Assert.assertEquals(selectedLanguage, toolShopHomePage.getSelectedLanguageText());
         }
-
+        toolShopHomePage.handleLanguageDropdown(defaultLanguagePosition);
     }
 
 
