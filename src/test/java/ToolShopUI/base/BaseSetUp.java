@@ -40,10 +40,7 @@ public class BaseSetUp
 
         System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + driverPath + "/chromedriver-win64/chromedriver.exe");
         WebDriver driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.navigate().to(siteUrl);
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(3));
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+        generalSetUp(siteUrl, driver);
         System.out.println("Launched Chrome Browser");
         return driver;
     }
@@ -52,10 +49,7 @@ public class BaseSetUp
         System.out.println("Launching Firefox Browser");
         System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + driverPath + "/geckodriver-v0.36.0-win64/geckodriver.exe");
         WebDriver driver = new FirefoxDriver();
-        driver.manage().window().maximize();
-        driver.navigate().to(siteUrl);
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(3));
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+        generalSetUp(siteUrl, driver);
         System.out.println("Launched Firefox Browser");
         return driver;
     }
