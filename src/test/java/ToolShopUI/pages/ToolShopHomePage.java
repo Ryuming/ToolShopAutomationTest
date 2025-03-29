@@ -188,6 +188,7 @@ public class ToolShopHomePage implements PageNavigator {
         return driver.findElement(currentPage);
     }
 
+    @Override
     public void goToPage(String siteUrl)
     {
         driver.navigate().to(siteUrl);
