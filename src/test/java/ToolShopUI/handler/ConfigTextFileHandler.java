@@ -1,4 +1,4 @@
-package ToolShopUI.Handler;
+package ToolShopUI.handler;
 
 import ToolShopUI.component.ConfigTextFile;
 

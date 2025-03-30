@@ -1,4 +1,4 @@
-package ToolShopUI.Handler;
+package ToolShopUI.handler;
 
 import org.junit.jupiter.api.Disabled;
 import org.testng.annotations.Test;

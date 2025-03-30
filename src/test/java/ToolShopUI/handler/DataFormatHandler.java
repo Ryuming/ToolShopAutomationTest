@@ -1,4 +1,4 @@
-package ToolShopUI.Handler;
+package ToolShopUI.handler;
 
 public class DataFormatHandler {
     public static boolean isNumeric (String strNum) {
