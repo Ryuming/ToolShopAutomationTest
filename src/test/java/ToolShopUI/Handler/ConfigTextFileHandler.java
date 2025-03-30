@@ -1,4 +1,6 @@
-package ToolShopUI.component;
+package ToolShopUI.Handler;
+
+import ToolShopUI.component.ConfigTextFile;
 
 import java.io.*;
 import java.io.File;

@@ -2,22 +2,17 @@ package ToolShopUI.testCases;
 
 import ToolShopUI.base.BaseSetUp;
 import ToolShopUI.component.ConfigTextFile;
-import ToolShopUI.component.ConfigTextFileHandler;
+import ConfigTextFileHandler;
 import ToolShopUI.pages.ToolShopHomePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 
-import java.time.Duration;
-import java.util.Arrays;
 import java.util.List;
 
 public class ToolShopHomePageTest extends BaseSetUp {
