@@ -1,4 +1,6 @@
-package ToolShopUI.component;
+package ToolShopUI.handler;
+
+import ToolShopUI.component.EmailFormat;
 
 public class InputDataRegisterHandler extends RandomDataHandler{
     public static String generateEmailAddress(EmailFormat initEmail) throws Exception {

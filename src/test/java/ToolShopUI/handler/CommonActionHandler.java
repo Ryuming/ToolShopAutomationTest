@@ -1,4 +1,4 @@
-package ToolShopUI.component;
+package ToolShopUI.handler;
 
 import org.openqa.selenium.WebDriver;
 

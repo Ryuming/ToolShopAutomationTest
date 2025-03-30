@@ -1,7 +1,7 @@
 package ToolShopUI.base;
 
 import ToolShopUI.component.ConfigTextFile;
-import ToolShopUI.component.ConfigTextFileHandler;
+import ToolShopUI.handler.ConfigTextFileHandler;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;

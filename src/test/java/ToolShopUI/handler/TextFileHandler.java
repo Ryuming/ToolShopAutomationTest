@@ -1,4 +1,4 @@
-package ToolShopUI.component;
+package ToolShopUI.handler;
 
 public interface TextFileHandler {
     public Object openConfigFile(String filePath);

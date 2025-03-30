@@ -1,20 +1,16 @@
 package ToolShopUI.pages;
 
-import ToolShopUI.base.BaseSetUp;
-import ToolShopUI.component.CommonActionHandler;
-import ToolShopUI.component.DataFormatHandler;
+import CommonActionHandler;
+import DataFormatHandler;
 import ToolShopUI.component.PageNavigator;
-import ToolShopUI.component.WebDriverHandler;
+import WebDriverHandler;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
-import org.testng.annotations.Parameters;
 import org.openqa.selenium.interactions.Actions;
 
-import java.time.Duration;
 import java.util.List;
 
 public class ToolShopHomePage implements PageNavigator {
@@ -294,7 +290,7 @@ public class ToolShopHomePage implements PageNavigator {
         clickSelectedPage(initElement);
         String currentPage = getCurrentPageText();
 
-        if (DataFormatHandler.isNumeric(selectedPage)&&DataFormatHandler.isNumeric(currentPage))
+        if (DataFormatHandler.isNumeric(selectedPage)&& DataFormatHandler.isNumeric(currentPage))
         {
             Assert.assertEquals(currentPage,selectedPage);
         }
